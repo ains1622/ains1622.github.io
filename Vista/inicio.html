@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Página de Ventas de Deportes</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -17,17 +18,36 @@
       border: 10px solid #333;
     }
     .header {
-      background-color: rgb(246, 185, 80);;
+      background-color: rgb(246, 185, 80);
       height: 80px;
       width: 100%;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
       color: #fff;
       font-size: 24px;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+    .header .logo {
+      font-size: 24px;
+    }
+    .header .user-actions {
+      display: flex;
+      align-items: center;
+    }
+    .header .user-actions a {
+      color: #fff;
+      margin-left: 20px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    .header .user-actions a i {
+      margin-right: 5px;
     }
     .navbar {
-      background-color: rgb(109 109 109);
+      background-color: rgb(109, 109, 109);
       height: 50px;
       width: 100%;
     }
@@ -77,7 +97,7 @@
       width: 93%;
       padding: 10px;
       border: none;
-      background-color: rgb(251 212 146);
+      background-color: rgb(251, 212, 146);
       color: #fff;
       border-radius: 5px;
       cursor: pointer;
@@ -136,7 +156,7 @@
       font-weight: bold;
     }
     .footer {
-      background-color: rgb(169 169 169);
+      background-color: rgb(169, 169, 169);
       height: 150px;
       width: 100%;
       display: flex;
@@ -157,7 +177,13 @@
   </style>
 </head>
 <body>
-  <div class="header">100% Deportes</div>
+  <div class="header">
+    <div class="logo">100% Deportes (colocar png)</div>
+    <div class="user-actions">
+      <a href="#"><i class="fas fa-shopping-cart"></i> Carrito</a>
+      <a href="#"><i class="fas fa-user"></i> Mi cuenta / Iniciar sesión</a>
+    </div>
+  </div>
   <div class="navbar">
     <ul>
       <li><a href="#">Inicio</a></li>
@@ -180,7 +206,7 @@
     </div>
     <div class="product-list">
       <h2>Nuestros Productos</h2>
-      </div>
+      <!-- Espacio para los productos -->
     </div>
   </div>
   <div class="footer">
