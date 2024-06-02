@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin - Página de Ventas de Deportes</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -23,32 +24,8 @@
       align-items: center;
       color: #fff;
       font-size: 24px;
-    }
-    .navbar {
-      background-color: #555555;
-      height: 50px;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .navbar ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-    }
-    .navbar li {
-      margin: 0 10px;
-    }
-    .navbar a {
-      text-decoration: none;
-      color: #fff;
-      font-weight: bold;
-      transition: color 0.3s;
-    }
-    .navbar a:hover {
-      color: #ffcc00;
+      padding-left: 20px;
+      box-sizing: border-box;
     }
     .sidebar {
       background-color: #333;
@@ -68,9 +45,14 @@
       border-bottom: 1px solid #444;
       margin-bottom: 10px;
       transition: background-color 0.3s;
+      display: flex;
+      align-items: center;
     }
     .sidebar a:hover {
       background-color: #444;
+    }
+    .sidebar a i {
+      margin-right: 10px;
     }
     .main-content {
       margin-left: 220px;
@@ -130,24 +112,46 @@
     .form-group button:hover {
       background-color: #244e70;
     }
+    .dropdown {
+      display: none;
+      flex-direction: column;
+      margin-left: 20px;
+    }
+    .sidebar a.products:hover + .dropdown,
+    .dropdown:hover {
+      display: flex;
+    }
+    .sidebar a.products .fa-chevron-down {
+      transition: transform 0.3s;
+    }
+    .sidebar a.products:hover .fa-chevron-down {
+      transform: rotate(180deg);
+    }
+    .dropdown a {
+      padding-left: 30px;
+      border: none;
+    }
   </style>
 </head>
 <body>
   <div class="header">Panel de Administración</div>
   <div class="sidebar">
-    <a href="#">Dashboard</a>
-    <a href="#">Productos</a>
-    <a href="#">Categorías</a>
-    <a href="#">Ofertas</a>
-    <a href="#">Pedidos</a>
-    <a href="#">Usuarios</a>
-    <a href="#">Configuración</a>
-  </div>
-      </form>
+    <a href="#"><i class="fas fa-home"></i> Inicio</a>
+    <a href="#"><i class="fas fa-box"></i> Órdenes</a>
+    <a href="#"><i class="fas fa-edit"></i> Edición de la Pagina</a>
+    <a href="#"><i class="fas fa-credit-card"></i> Pagos</a>
+    <a href="#"><i class="fas fa-comments"></i> Atención al Cliente</a>
+    <a href="#" class="products"><i class="fas fa-boxes"></i> Productos <i class="fas fa-chevron-down"></i></a>
+    <div class="dropdown">
+      <a href="#"><i class="fas fa-plus"></i> Agregar</a>
+      <a href="#"><i class="fas fa-edit"></i> Editar</a>
     </div>
+    <a href="#"><i class="fas fa-history"></i> Historial de Ventas</a>
+    <a href="#"><i class="fas fa-store"></i> Mi Tienda</a>
+    <a href="#"><i class="fas fa-tools"></i> Soporte Técnico</a>
   </div>
   <div class="footer">
-    <p>&copy; 2024 Venta de Artículos Deportivos. Todos los derechos reservados no como aurelio el criminal.</p>
+    <p>&copy; 2024 Venta de Artículos Deportivos. Todos los derechos reservados no como Aurelio el criminal.</p>
   </div>
 </body>
 </html>
