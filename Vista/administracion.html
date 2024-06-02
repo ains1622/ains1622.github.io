@@ -47,6 +47,7 @@
       transition: background-color 0.3s;
       display: flex;
       align-items: center;
+      cursor: pointer;
     }
     .sidebar a:hover {
       background-color: #444;
@@ -117,15 +118,8 @@
       flex-direction: column;
       margin-left: 20px;
     }
-    .sidebar a.products:hover + .dropdown,
-    .dropdown:hover {
-      display: flex;
-    }
     .sidebar a.products .fa-chevron-down {
       transition: transform 0.3s;
-    }
-    .sidebar a.products:hover .fa-chevron-down {
-      transform: rotate(180deg);
     }
     .dropdown a {
       padding-left: 30px;
@@ -161,5 +155,18 @@
   <div class="footer">
     <p>&copy; 2024 Venta de Artículos Deportivos. Todos los derechos reservados no como Aurelio el criminal.</p>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const productsMenu = document.querySelector('.sidebar a.products');
+      const dropdown = document.querySelector('.dropdown');
+
+      productsMenu.addEventListener('click', function(event) {
+        event.preventDefault();
+        dropdown.style.display = dropdown.style.display === 'flex' ? 'none' : 'flex';
+        const chevron = productsMenu.querySelector('.fa-chevron-down');
+        chevron.style.transform = dropdown.style.display === 'flex' ? 'rotate(180deg)' : 'rotate(0deg)';
+      });
+    });
+  </script>
 </body>
 </html>
