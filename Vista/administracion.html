@@ -126,24 +126,16 @@
       border: none;
     }
   </style>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9VM3FBQMHK"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-9VM3FBQMHK');
-  </script>
 </head>
 <body>
   <div class="header">Panel de Administración</div>
   <div class="sidebar">
     <a href="#"><i class="fas fa-home"></i> Inicio</a>
     <a href="#"><i class="fas fa-box"></i> Órdenes</a>
-    <a href="#"><i class="fas fa-edit"></i> Edición de la Pagina</a>
+    <a href="#"><i class="fas fa-edit"></i> Edición de la Página</a>
     <a href="#"><i class="fas fa-credit-card"></i> Pagos</a>
     <a href="#"><i class="fas fa-comments"></i> Atención al Cliente</a>
-    <a href="#" class="products"><i class="fas fa-boxes"></i> Productos <i class="fas fa-chevron-down"></i></a>
+    <a href="#" id="maintenance-toggle"><i class="fas fa-exclamation-triangle"></i> Suspender Página</a>
     <div class="dropdown">
       <a href="#"><i class="fas fa-plus"></i> Agregar</a>
       <a href="#"><i class="fas fa-edit"></i> Editar</a>
@@ -155,16 +147,41 @@
   <div class="footer">
     <p>&copy; 2024 Venta de Artículos Deportivos. Todos los derechos reservados no como Aurelio el criminal.</p>
   </div>
+  <!-- Modal de confirmación -->
+  <div id="confirmation-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p>¿Está seguro de que desea suspender temporalmente la página para realizar mantenimiento?</p>
+      <div class="button-container">
+        <button id="confirm-suspension">Sí</button>
+        <button id="cancel-suspension" class="close">No</button>
+      </div>
+    </div>
+  </div>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const productsMenu = document.querySelector('.sidebar a.products');
-      const dropdown = document.querySelector('.dropdown');
+      const maintenanceToggle = document.getElementById('maintenance-toggle');
+      const modal = document.getElementById('confirmation-modal');
+      const closeBtn = document.querySelector('.close');
+      const confirmBtn = document.getElementById('confirm-suspension');
+      const cancelBtn = document.getElementById('cancel-suspension');
 
-      productsMenu.addEventListener('click', function(event) {
-        event.preventDefault();
-        dropdown.style.display = dropdown.style.display === 'flex' ? 'none' : 'flex';
-        const chevron = productsMenu.querySelector('.fa-chevron-down');
-        chevron.style.transform = dropdown.style.display === 'flex' ? 'rotate(180deg)' : 'rotate(0deg)';
+      maintenanceToggle.addEventListener('click', function() {
+        modal.style.display = 'block';
+      });
+
+      closeBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+      });
+
+      cancelBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+      });
+
+      confirmBtn.addEventListener('click', function() {
+        // Aquí podrías redirigir a otra página o realizar acciones específicas para suspender la página
+        alert('La página ha sido suspendida temporalmente para mantenimiento.');
+        modal.style.display = 'none';
       });
     });
   </script>
