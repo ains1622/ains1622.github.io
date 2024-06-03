@@ -3,28 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mostrar Datos de Excel</title>
+  <title>Lista de Usuarios</title>
 </head>
 <body>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Ruta al archivo Excel
-      const excelFilePath = 'C:/Users/ricar/OneDrive/Escritorio/ing/Ingenieria-Sofware-1.1/ains1622.github.io/datos/datos_prueba.xlsx';
+  <h1>Lista de Usuarios</h1>
 
-      // Cargar el archivo Excel
-      const workbook = XLSX.readFile(excelFilePath);
+  <?php
+  // Conexión a la base de datos
+  $servername = "localhost"; // Cambia esto por tu servidor de base de datos
+  $username = "root"; // Cambia esto por tu nombre de usuario de MySQL
+  $password = "123456"; // Cambia esto por tu contraseña de MySQL
+  $database = "sys"; // Cambia esto por el nombre de tu base de datos
 
-      // Obtener la primera hoja del archivo
-      const sheetName = workbook.SheetNames[0];
-      const worksheet = workbook.Sheets[sheetName];
+  // Crear conexión
+  $conn = new mysqli($servername, $username, $password, $database);
 
-      // Convertir la hoja de cálculo a un objeto JSON
-      const jsonData = XLSX.utils.sheet_to_json(worksheet);
+  // Verificar conexión
+  if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
+  }
 
-      // Imprimir los datos en la consola del navegador
-      console.log(jsonData);
-    });
-  </script>
+  // Consulta SQL para seleccionar nombres de la tabla usuarios
+  $sql = "SELECT nombre FROM usuarios";
+  $result = $conn->query($sql);
+
+  if ($result->num_rows > 0) {
+    // Imprimir nombres de usuarios
+    while($row = $result->fetch_assoc()) {
+      echo "<p>" . $row["nombre"] . "</p>";
+    }
+  } else {
+    echo "No se encontraron usuarios";
+  }
+
+  // Cerrar conexión
+  $conn->close();
+  ?>
 </body>
 </html>
