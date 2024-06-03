@@ -57,7 +57,7 @@
 <body>
   <div class="login-container">
     <h2>Iniciar Sesión</h2>
-    <form>
+    <form id="login-form">
       <div class="form-group">
         <label for="username">Usuario:</label>
         <input type="text" id="username" name="username" required>
@@ -67,10 +67,53 @@
         <input type="password" id="password" name="password" required>
       </div>
       <div class="form-group">
-        <button type="button">Iniciar Sesión</button>
+        <button type="button" id="login-button">Iniciar Sesión</button>
       </div>
     </form>
+    <p id="login-message"></p>
     <p>¿No tienes una cuenta? <a href="https://ains1622.github.io/Vista/registro">Crea una</a></p>
   </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginForm = document.getElementById('login-form');
+      const loginMessage = document.getElementById('login-message');
+
+      document.getElementById('login-button').addEventListener('click', function() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const workbook = XLSX.readFile('C:/Users/ricar/OneDrive/Escritorio/ing/Ingenieria-Sofware-1.1/ains1622.github.io/datos/datos_prueba.xlsx');
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+
+        const range = XLSX.utils.decode_range(worksheet['!ref']);
+
+        let isAuthenticated = false;
+
+        for (let rowNum = range.s.r; rowNum <= range.e.r; rowNum++) {
+          const usernameCell = worksheet[XLSX.utils.encode_cell({ r: rowNum, c: 0 })];
+          const passwordCell = worksheet[XLSX.utils.encode_cell({ r: rowNum, c: 1 })];
+          const adminCell = worksheet[XLSX.utils.encode_cell({ r: rowNum, c: 2 })];
+
+          if (usernameCell && usernameCell.v === username && passwordCell && passwordCell.v === password) {
+            isAuthenticated = true;
+
+            if (adminCell && adminCell.v === 1) {
+              loginMessage.textContent = '¡Inicio de sesión exitoso! Eres un administrador.';
+            } else {
+              loginMessage.textContent = '¡Inicio de sesión exitoso!';
+            }
+            break;
+          }
+        }
+
+        if (!isAuthenticated) {
+          loginMessage.textContent = 'Error: Nombre de usuario o contraseña incorrectos.';
+        }
+      });
+    });
+  </script>
 </body>
 </html>
