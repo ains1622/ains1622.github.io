@@ -20,17 +20,22 @@ public class WebSecurityConfig {
     private final AppUserService appUserService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @SuppressWarnings("deprecation")
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                .authorizeRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/api/v*/registration/**").permitAll()
-                        .anyRequest().authenticated())
-                .formLogin();
+                .csrf(csrf -> csrf.disable())
+                .authorizeRequests(authorizeRequests ->
+                        authorizeRequests
+                                .requestMatchers("/api/v*/registration/**").permitAll()
+                                .anyRequest().authenticated()
+                );
+
+
+                
+
         return http.build();
     }
-    
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
