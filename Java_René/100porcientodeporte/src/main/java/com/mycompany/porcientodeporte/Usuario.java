@@ -16,12 +16,8 @@ import java.sql.Statement;
 
 public class Usuario {
     
-    private static String username = "User";
-    private static String password = "contra";
-    private static String correo = "correo@gmail.com";
-    private boolean isAdmin;
  
-    public static boolean validar_usuario_nombre(){
+    public static boolean validar_usuario_nombre(String username,String password){
         
          Connection conexion = ConexionDB.Conectar();
          boolean esValido;
@@ -63,7 +59,7 @@ public class Usuario {
         return false;
     }
 
-    public static boolean validar_usuario_mail(){
+    public static boolean validar_usuario_mail(String correo, String password){
         
         Connection conexion = ConexionDB.Conectar();
         boolean esValido;
@@ -105,7 +101,7 @@ public class Usuario {
        return false;
    }
    
-   public static String agregar_usuario( ){
+   public static String agregar_usuario(String username,String password,String correo){
        if(username==null) return "ERROR: usuario no ingresado";
        else if(password==null) return "ERROR: contraseña no ingresada";
        else if(correo==null) return "ERROR: correo no ingresado";
