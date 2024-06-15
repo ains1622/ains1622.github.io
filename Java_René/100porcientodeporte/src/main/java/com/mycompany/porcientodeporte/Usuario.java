@@ -16,9 +16,9 @@ import java.sql.Statement;
 
 public class Usuario {
     
-    private static String username = "User1";
-    private static String password = "contraseña";
-    private String correo;
+    private static String username = "User";
+    private static String password = "contra";
+    private static String correo = "correo@gmail.com";
     private boolean isAdmin;
  
     public static boolean validar_usuario_nombre(){
@@ -151,5 +151,5 @@ public class Usuario {
        return "ERROR: desconocido";
        
    }
-   
+
 }

@@ -12,6 +12,8 @@ public class App {
     public static void main(String[] args) {
         
         boolean validar_usuario = Usuario.validar_usuario_nombre();
+        String agregar_usuario = Usuario.agregar_usuario();
+        validar_usuario = Usuario.validar_usuario_nombre();
         
     }
 }
