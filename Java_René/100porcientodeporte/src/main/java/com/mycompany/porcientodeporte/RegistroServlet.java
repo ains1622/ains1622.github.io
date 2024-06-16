@@ -1,6 +1,7 @@
 package com.mycompany.porcientodeporte;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,20 +10,27 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/registro")
 public class RegistroServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+
+        String username = request.getParameter("name");
         String email = request.getParameter("email");
+        String password = request.getParameter("password");
 
         String resultado = Usuario.agregar_usuario(username, password, email);
 
+        response.setContentType("text/html");
+        response.getWriter().write("<html><body>");
         if (resultado.contains("EXITO")) {
-            response.sendRedirect("iniciosesion.html");
+            response.getWriter().write("<h2>Registro exitoso</h2>");
         } else {
-            response.sendRedirect("registro.html?error=" + resultado);
+            response.getWriter().write("<h2>Error en el registro: " + resultado + "</h2>");
         }
+        response.getWriter().write("</body></html>");
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.sendRedirect("registro.html");
     }
 }
