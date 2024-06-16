@@ -1,133 +1,149 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.mycompany.porcientodeporte;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+/**
+ *
+ * @author robla
+ */
+
 
 public class Usuario {
-
-    private String username;
-    private String password;
-    private String correo;
-    private boolean isAdmin;
-
-    // Constructor vacío
-    public Usuario() {
-    }
-
-    // Getters y setters para los atributos
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
-    }
-
-    // Método para validar usuario por nombre de usuario y contraseña
-    public boolean validarUsuarioPorNombre() {
-        Connection conexion = ConexionDB.Conectar();
-        boolean esValido = false;
-
+    
+ 
+    public static boolean validar_usuario_nombre(String username,String password){
+        
+         Connection conexion = ConexionDB.Conectar();
+         boolean esValido;
+         
         if (conexion != null) {
-            PreparedStatement statement = null;
-            ResultSet resultSet = null;
             try {
-                String sql = "SELECT user_validate_password(?, ?)";
-                statement = conexion.prepareStatement(sql);
-                statement.setString(1, username);
-                statement.setString(2, password);
-
-                resultSet = statement.executeQuery();
-
-                if (resultSet.next()) {
+                // Crear un Statement para ejecutar la consulta
+                Statement statement = conexion.createStatement();
+                // Ejecutar la consulta SQL
+                ResultSet resultSet = statement.executeQuery("SELECT user_validate_password('"+username+"','"+password+"')");
+                
+                // Iterar a través del ResultSet y almacenar el valor retornado
+                while (resultSet.next()) {
+                    // Suponiendo que la columna que quieres almacenar sea un entero
                     esValido = resultSet.getBoolean(1);
-                    System.out.println("Valor obtenido: " + esValido);
+                    if (esValido){
+                        System.out.println("Valor obtenido: TRUE");
+                        return true;
+                    }
+                    else {
+                        System.out.println("Valor obtenido: FALSE");
+                        return false;
+                    }
                 }
-
+                
+                // Cerrar el ResultSet y el Statement
+                resultSet.close();
+                statement.close();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             } finally {
-                try {
-                    if (resultSet != null) {
-                        resultSet.close();
-                    }
-                    if (statement != null) {
-                        statement.close();
-                    }
-                    ConexionDB.Desconectar(conexion);
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+                // Cerrar la conexión
+                ConexionDB.Desconectar(conexion);
             }
         } else {
             System.out.println("No se pudo obtener una conexión a la base de datos.");
         }
-
-        return esValido;
+        
+        return false;
     }
 
-    // Método para agregar un nuevo usuario a la base de datos
-    public String agregarUsuario() {
+    public static boolean validar_usuario_mail(String correo, String password){
+        
         Connection conexion = ConexionDB.Conectar();
-
-        if (conexion != null) {
-            PreparedStatement statement = null;
-            try {
-                String sql = "INSERT INTO usuarios (username, password, correo) VALUES (?, ?, ?)";
-                statement = conexion.prepareStatement(sql);
-                statement.setString(1, username);
-                statement.setString(2, password);
-                statement.setString(3, correo);
-
-                int rowsAffected = statement.executeUpdate();
-
-                if (rowsAffected > 0) {
-                    return "Usuario agregado exitosamente";
-                } else {
-                    return "Error al agregar usuario";
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-                return "ERROR: " + ex.getMessage();
-            } finally {
-                try {
-                    if (statement != null) {
-                        statement.close();
-                    }
-                    ConexionDB.Desconectar(conexion);
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        } else {
-            return "No se pudo obtener una conexión a la base de datos.";
-        }
+        boolean esValido;
+        
+       if (conexion != null) {
+           try {
+               // Crear un Statement para ejecutar la consulta
+               Statement statement = conexion.createStatement();
+               // Ejecutar la consulta SQL
+               ResultSet resultSet = statement.executeQuery("SELECT mail_validate_password('"+correo+"','"+password+"')");
+               
+               // Iterar a través del ResultSet y almacenar el valor retornado
+               while (resultSet.next()) {
+                   // Suponiendo que la columna que quieres almacenar sea un entero
+                   esValido = resultSet.getBoolean(1);
+                   if (esValido){
+                       System.out.println("Valor obtenido: TRUE");
+                       return true;
+                   }
+                   else {
+                       System.out.println("Valor obtenido: FALSE");
+                       return false;
+                   }
+               }
+               
+               // Cerrar el ResultSet y el Statement
+               resultSet.close();
+               statement.close();
+           } catch (SQLException ex) {
+               ex.printStackTrace();
+           } finally {
+               // Cerrar la conexión
+               ConexionDB.Desconectar(conexion);
+           }
+       } else {
+           System.out.println("No se pudo obtener una conexión a la base de datos.");
+       }
+       
+       return false;
+   }
+   
+   public static String agregar_usuario(String username,String password,String correo){
+       if(username==null) return "ERROR: usuario no ingresado";
+       else if(password==null) return "ERROR: contraseña no ingresada";
+       else if(correo==null) return "ERROR: correo no ingresado";
+       
+       Connection conexion = ConexionDB.Conectar();
+        
+       if (conexion != null) {
+           try {
+               // Crear un Statement para ejecutar la consulta
+               Statement statement = conexion.createStatement();
+               // Ejecutar la consulta SQL
+               ResultSet resultSet = statement.executeQuery("SELECT agregar_usuario('"+username+"','"+password+"','"+correo+"');");
+               
+               String resultado;
+               
+               // Iterar a través del ResultSet y almacenar el valor retornado
+               while (resultSet.next()) {
+                   // Suponiendo que la columna que quieres almacenar sea un entero
+                   resultado = resultSet.getString(1);
+                   if (resultado.contains("ERROR")){
+                       System.out.println("Valor obtenido: ERROR");
+                       return resultado;
+                   }
+                   else {
+                       System.out.println("Valor obtenido: EXITO");
+                       return resultado;
+                   }
+               }
+               
+               // Cerrar el ResultSet y el Statement
+               resultSet.close();
+               statement.close();
+           } catch (SQLException ex) {
+               ex.printStackTrace();
+           } finally {
+               // Cerrar la conexión
+               ConexionDB.Desconectar(conexion);
+           }
+       } else {
+           System.out.println("No se pudo obtener una conexión a la base de datos.");
+       }
+       
+    return "ERROR: desconocido";
     }
-}
+    }

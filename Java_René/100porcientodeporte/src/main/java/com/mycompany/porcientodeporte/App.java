@@ -1,19 +1,21 @@
-package com.mycompany.porcientodeporte;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
 
-public class App {
-
-    // Método para manejar la solicitud POST de registro desde un servidor web
-    public static String manejarRegistro(String username, String correo, String password) {
-        // Crear una instancia de Usuario y establecer los datos ingresados
-        Usuario usuario = new Usuario();
-        usuario.setUsername(username);
-        usuario.setCorreo(correo);
-        usuario.setPassword(password);
-
-        // Llamar a los métodos en Usuario para validar y agregar usuario
-        boolean esValido = usuario.validarUsuarioPorNombre();
-        String resultado = usuario.agregarUsuario();
-
-        return resultado;
-    }
-}
+ package com.mycompany.porcientodeporte;
+ /**
+  *
+  * @author robla
+  */
+ public class App {
+ 
+     public static void main(String[] args) {
+         
+         boolean validar_usuario = Usuario.validar_usuario_nombre("User2","contra2");
+         String agregar_usuario = Usuario.agregar_usuario("User2","contra2","correo2@gmail.com");
+         validar_usuario = Usuario.validar_usuario_mail("correo2@gmail.com","contra2");
+         
+     }
+ }
+ 
+ 
