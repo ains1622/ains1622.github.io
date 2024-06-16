@@ -53,6 +53,38 @@
       background-color: rgb(223 171 82);
     }
   </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('form').on('submit', function(e) {
+        e.preventDefault();
+
+        const username = $('#username').val();
+        const password = $('#password').val();
+
+        $.ajax({
+          type: 'POST',
+          url: 'C:\Users\ricar\OneDrive\Escritorio\ains1622.github.io\Java_René/100porcientodeporte/src/main/java/com/mycompany/porcientodeporte\LoginServlet.java',
+          data: {
+            username: username,
+            password: password
+          },
+          success: function(response) {
+            if (response.status === 'success') {
+              alert(response.message);
+              // Redirigir a la página principal o dashboard
+              window.location.href = 'dashboard.html';
+            } else {
+              alert(response.message);
+            }
+          },
+          error: function() {
+            alert('Error en la solicitud');
+          }
+        });
+      });
+    });
+  </script>
 </head>
 <body>
   <div class="login-container">
@@ -67,10 +99,10 @@
         <input type="password" id="password" name="password" required>
       </div>
       <div class="form-group">
-        <button type="button">Iniciar Sesión</button>
+        <button type="submit">Iniciar Sesión</button>
       </div>
     </form>
-    <p>¿No tienes una cuenta? <a href="https://ains1622.github.io/Vista/registro">Crea una</a></p>
+    <p>¿No tienes una cuenta? <a href="registro.html">Crea una</a></p>
   </div>
 </body>
 </html>
